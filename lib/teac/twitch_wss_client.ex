@@ -8,21 +8,28 @@ defmodule Teac.TwitchWssClient do
     # We need a client for authing and generating a jwt
     # access_jwt = ""
 
-    WebSockex.start_link(@wss_endpoint, __MODULE__, %{})
+    WebSockex.start_link(
+      @wss_endpoint,
+      __MODULE__,
+      %{
+        # access_token: access_jwt
+      }
+    )
   end
 
-  def init(state) do
-    Logger.info("Successfully ~authenticated and connected.")
-    Logger.debug(state)
+  # def init(state) do
+  #   Logger.info("Successfully ~authenticated and connected.")
+  #   dbg(state)
 
-    {:ok, state}
-  end
+  #   {:ok, state}
+  # end
 
   @impl true
   def handle_connect(_conn, state) do
+    dbg(state)
+
     Logger.info("Successfully connected to twitch websocket")
     Logger.debug(state)
-
     {:ok, state}
   end
 
@@ -32,7 +39,7 @@ defmodule Teac.TwitchWssClient do
 
     case JSON.decode(msg) do
       {:ok, data} ->
-        data
+        dbg(data)
 
       {:error, reason} ->
         Logger.error("Failed to decode JSON: #{inspect(reason)}")

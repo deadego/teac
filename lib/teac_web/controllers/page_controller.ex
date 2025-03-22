@@ -6,4 +6,9 @@ defmodule TeacWeb.PageController do
     # so skip the default app layout.
     render(conn, :home, layout: false)
   end
+
+  def twitch(conn, params) do
+    dbg(params)
+    text(conn, :ok)
+  end
 end
