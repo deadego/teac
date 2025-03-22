@@ -28,6 +28,13 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
+  twitch_client_id =
+    System.get_env("TWITCH_CLIENT_ID") ||
+      raise """
+      environment variable TWITCH_CLIENT_ID is missing.
+      Goto https://dev.twitch.tv/console/apps/ to find yours.
+      """
+
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :teac, Teac.Repo,
@@ -64,6 +71,8 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
+
+  config :teac, :twitch, client_id: twitch_client_id
 
   # ## SSL Support
   #

@@ -1,4 +1,4 @@
-# Teac
+# (Teac) Twitch Elixir API Client
 
 To start your Phoenix server:
 
