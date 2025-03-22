@@ -1,7 +1,8 @@
 defmodule Teac.TwitchOAuthClient do
   def authorize_url() do
     state = random_string()
-    "https://id.twitch.tv/oauth2/authorize?client_id=#{client_id()}&state=#{state}"
+
+    "https://id.twitch.tv/oauth2/authorize?client_id=#{client_id()}&state=#{state}&response_type=token"
   end
 
   def random_string do
