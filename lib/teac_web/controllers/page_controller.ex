@@ -8,7 +8,7 @@ defmodule TeacWeb.PageController do
   end
 
   def twitch(conn, params) do
-    dbg(params)
+    dbg([conn, params])
     text(conn, :ok)
   end
 end
