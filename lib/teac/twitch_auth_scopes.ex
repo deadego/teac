@@ -6,7 +6,7 @@ defmodule Teac.TwitchAuthScopes do
   defmodule Analytics do
     @moduledoc "Analytics related scopes"
     @read_extension "analytics:read:extensions"
-    @read_game "analytics:read:games"
+    @read_games "analytics:read:games"
 
     @doc """
     View analytics data for the Twitch Extensions owned by the authenticated account.
