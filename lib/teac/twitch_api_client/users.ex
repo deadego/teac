@@ -46,8 +46,37 @@ defmodule Teac.TwitchApiClient.Users do
     end
   end
 
-  def put() do
-    # PUT https://api.twitch.tv/helix/users
+  @doc """
+  Update User
+
+  source docs: https://dev.twitch.tv/docs/api/reference/#update-user
+
+  Updates the specified user’s information. The user ID in the OAuth token identifies the user whose information you want to update.
+  To include the user’s verified email address in the response, the user access token must also include the user:read:email scope.
+
+  ## Authorization
+
+  Requires a user access token that includes the user:edit scope.
+  """
+  def put(opts) do
+    token = Keyword.fetch!(opts, :token)
+    client_id = Keyword.fetch!(opts, :client_id)
+    description = Keyword.get(opts, :description, nil)
+
+    case Req.put!("https://api.twitch.tv/helix/users",
+           headers: [
+             {"Authorization", "Bearer #{token}"},
+             {"Client-Id", client_id},
+             {"Content-Type", "application/x-www-form-urlencoded"}
+           ],
+           form: [
+             description: description
+           ],
+           decode_body: :json
+         ) do
+      %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+      %Req.Response{body: body} -> {:error, body}
+    end
   end
 
   defmodule Blocks do
