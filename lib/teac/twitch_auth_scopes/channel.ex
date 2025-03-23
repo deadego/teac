@@ -152,8 +152,8 @@ defmodule Teac.TwitchAuthScopes.Channel do
 
   EventSub:
   - Goal Begin: https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalbegin
-  Goal Progress: https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalprogress
-  Goal End: https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalend
+  - Goal Progress: https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalprogress
+  - Goal End: https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/#channelgoalend
   """
   def read_goals, do: @read_goals
 

@@ -1,20 +1,48 @@
 defmodule Teac.TwitchApiClient.Users do
+  @doc """
+  Gets information about one or more users.
+
+  doc source: https://dev.twitch.tv/docs/api/reference/#get-users
+
+  You may look up users using their user ID, login name, or both but the sum total of the number of users you may look up is 100.
+  For example, you may specify 50 IDs and 50 names or 100 IDs or names, but you cannot specify 100 IDs and 100 names.
+  If you don’t specify IDs or login names, the request returns information about the user in the access token if you specify a user access token.
+
+  ## Scope: [Teac.TwitchAuthScopes.User.read_email/0](Teac.TwitchAuthScopes.User.read_email/0)
+  To include the user’s verified email address in the response, you must use a user access token that includes the user:read:email scope.
+
+  ## Authorization
+  Requires an app access token or user access token.
+  """
   def get(opts) do
     token = Keyword.fetch!(opts, :token)
     client_id = Keyword.fetch!(opts, :client_id)
 
-    case Req.get!("https://api.twitch.tv/helix/users",
-           headers: [
-             {"Authorization", "Bearer #{token}"},
-             {"Client-Id", client_id}
-           ]
-           # params: [login: "your_username_here"]
-         ) do
-      %Req.Response{status: 200, body: %{"data" => data}} ->
-        {:ok, data}
+    # Normalize parameters to lists of strings
+    ids = opts |> Keyword.get(:id, []) |> List.wrap() |> Enum.map(&to_string/1)
+    logins = opts |> Keyword.get(:login, []) |> List.wrap() |> Enum.map(&to_string/1)
 
-      %Req.Response{body: body} ->
-        {:error, body}
+    total = length(ids) + length(logins)
+
+    cond do
+      total > 100 ->
+        {:error, "Total IDs and logins cannot exceed 100"}
+
+      true ->
+        # Convert to repeated query params
+        params =
+          Enum.map(ids, &{:id, &1}) ++ Enum.map(logins, &{:login, &1})
+
+        case Req.get!("https://api.twitch.tv/helix/users",
+               headers: [
+                 {"Authorization", "Bearer #{token}"},
+                 {"Client-Id", client_id}
+               ],
+               params: params
+             ) do
+          %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+          %Req.Response{body: body} -> {:error, body}
+        end
     end
   end
 
