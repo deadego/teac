@@ -1,6 +1,21 @@
 defmodule Teac.TwitchApiClient.Users do
-  def get() do
-    # GET https://api.twitch.tv/helix/users
+  def get(opts) do
+    token = Keyword.fetch!(opts, :token)
+    client_id = Keyword.fetch!(opts, :client_id)
+
+    case Req.get!("https://api.twitch.tv/helix/users",
+           headers: [
+             {"Authorization", "Bearer #{token}"},
+             {"Client-Id", client_id}
+           ]
+           # params: [login: "your_username_here"]
+         ) do
+      %Req.Response{status: 200, body: %{"data" => data}} ->
+        {:ok, data}
+
+      %Req.Response{body: body} ->
+        {:error, body}
+    end
   end
 
   def put() do

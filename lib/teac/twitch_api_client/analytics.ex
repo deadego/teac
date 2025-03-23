@@ -1,13 +1,57 @@
 defmodule Teac.TwitchApiClient.Analytics do
   defmodule Teac.TwitchApiClient.Analytics.Extensions do
+    @doc """
+    # Get Extension Analytics
+    Gets an analytics report for one or more extensions. The response contains the URLs used to download the reports (CSV files).
+
+    From https://dev.twitch.tv/docs/api/reference/#get-extension-analytics
+
+    ### Authorization
+    Requires a user access token that includes the `analytics:read:extensions` scope.
+
+    ### Parameters
+    * extension_id :string, required: false
+
+    The extension's client ID. If specified, the response contains a report for the specified extension. If not specified, the response includes a report for each extension that the authenticated user owns.
+
+    * type :string, required: false
+
+    The type of analytics report to get. Possible values are: `overview_v2`
+
+    * started_at :string, required: false
+
+    The reporting window's start date, in RFC3339 format. Set the time portion to zeroes (for example, 2021-10-22T00:00:00Z).
+    The start date must be on or after January 31, 2018. If you specify an earlier date, the API ignores it and uses January 31, 2018.
+    If you specify a start date, you must specify an end date. If you don't specify a start and end date, the report includes all available data since January 31, 2018.
+    The report contains one row of data for each day in the reporting window.
+
+    * ended_at :string, required: false
+
+    The reporting window's end date, in RFC3339 format. Set the time portion to zeroes (for example, 2021-10-27T00:00:00Z).
+    The report is inclusive of the end date. Specify an end date only if you provide a start date.
+    Because it can take up to two days for the data to be available, you must specify an end date that's earlier than today minus one to two days.
+    If not, the API ignores your end date and uses an end date that is today minus one to two days.
+    """
     def get() do
-      # GET https://api.twitch.tv/helix/analytics/extensions
+      Req.get!("https://api.twitch.tv/helix/analytics/extensions",
+        headers: [
+          {"Authorization", "Bearer SOME_TOKEN"},
+          {"Client-Id", "SOME_ID"}
+        ],
+        params: [login: "your_username_here"]
+      )
     end
   end
 
   defmodule Teac.TwitchApiClient.Analytics.Games do
     def get() do
-      # GET https://api.twitch.tv/helix/analytics/games
+      Req.get!("GET https://api.twitch.tv/helix/analytics/games",
+        headers: [
+          {"Authorization", "Bearer SOME_TOKEN"},
+          {"Client-Id", "SOME_ID"}
+        ],
+        params: [login: "your_username_here"]
+      )
     end
   end
 end
