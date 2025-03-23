@@ -10,7 +10,6 @@ defmodule Teac.Accounts.User do
     field :name, :string
     field :username, :string
     field :confirmed_at, :naive_datetime
-    field :role, :string, default: "subscriber"
     field :active_profile_user_id, :id
     field :avatar_url, :string
     field :external_homepage_url, :string

@@ -19,6 +19,15 @@ defmodule TeacWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
+  alias Teac.Accounts
+
+  def home_path(nil = _current_user), do: "/"
+  def home_path(%Accounts.User{} = current_user), do: profile_path(current_user)
+
+  def profile_path(%Accounts.User{} = current_user) do
+    profile_path(current_user.username)
+  end
+
   @doc """
   Renders a modal.
 

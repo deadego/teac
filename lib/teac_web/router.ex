@@ -1,6 +1,9 @@
 defmodule TeacWeb.Router do
   use TeacWeb, :router
 
+  import TeacWeb.UserAuth,
+    only: [redirect_if_user_is_authenticated: 2]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -15,30 +18,41 @@ defmodule TeacWeb.Router do
   end
 
   scope "/", TeacWeb do
-    pipe_through :browser
-
-    get "/", PageController, :home
-    get "/twitch", PageController, :twitch
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    get "/oauth/callbacks/:provider", OAuthCallbackController, :new
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", TeacWeb do
-  #   pipe_through :api
-  # end
+  scope "/", TeacWeb do
+    pipe_through :browser
 
-  # Enable LiveDashboard and Swoosh mailbox preview in development
-  if Application.compile_env(:teac, :dev_routes) do
-    # If you want to use the LiveDashboard in production, you should put
-    # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
-    # as long as you are also using SSL (which you should anyway).
+    get "/", RedirectController, :redirect_authenticated
+
+    delete "/signout", OAuthCallbackController, :sign_out
+
+    live_session :default, on_mount: [{TeacWeb.UserAuth, :current_user}] do
+      live "/signin", SignInLive, :index
+    end
+
+    live_session :authenticated,
+      on_mount: [{TeacWeb.UserAuth, :ensure_authenticated}] do
+      live "/:profile_username", ProfileLive, :show
+      live "/profile/settings", SettingsLive, :edit
+    end
+  end
+
+  if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
+    scope "/" do
+      pipe_through :browser
+      live_dashboard "/dashboard", metrics: TeacWeb.Telemetry
+    end
+  end
+
+  if Mix.env() == :dev do
     scope "/dev" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: TeacWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end

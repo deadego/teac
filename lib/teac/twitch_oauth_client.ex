@@ -5,27 +5,59 @@ defmodule Teac.TwitchOAuthClient do
 
   @default_headers [{"Content-Type", "application/x-www-form-urlencoded"}]
 
-  def authorize_url(client_id, state, response_type, redirect_uri, scopes) do
+  def authorize_url() do
+    authorize_url(
+      client_id: client_id(),
+      state: random_string(),
+      response_type: "code",
+      redirect_uri: redirect_uri(),
+      scopes: scopes()
+    )
+  end
+
+  def authorize_url(
+        client_id: client_id,
+        state: state,
+        response_type: response_type,
+        redirect_uri: redirect_uri,
+        scopes: scopes
+      ) do
     query_params = [
       client_id: client_id,
       state: state,
       response_type: response_type,
       redirect_uri: redirect_uri,
-      scope: scopes
+      scope: scopes |> Enum.join(" ")
     ]
 
     "https://id.twitch.tv/oauth2/authorize?" <> URI.encode_query(query_params)
   end
 
-  def get_token(code) do
+  def exchange_code_for_token(opts) do
+    code = Keyword.fetch!(opts, :code)
+
+    get_token(
+      client_id: client_id(),
+      client_secret: client_secret(),
+      code: code,
+      redirect_uri: redirect_uri()
+    )
+  end
+
+  def get_token(
+        client_id: client_id,
+        client_secret: client_secret,
+        code: code,
+        redirect_uri: redirect_uri
+      ) do
     Req.post(
       url: "https://id.twitch.tv/oauth2/token",
       form: [
-        client_id: client_id(),
-        client_secret: client_secret(),
+        client_id: client_id,
+        client_secret: client_secret,
         code: code,
         grant_type: "authorization_code",
-        redirect_uri: redirect_uri()
+        redirect_uri: redirect_uri
       ],
       headers: @default_headers,
       receive_timeout: 15_000,
@@ -41,11 +73,12 @@ defmodule Teac.TwitchOAuthClient do
 
   defp handle_token_response({:error, reason}), do: {:error, reason}
 
-  defp client_id, do: Teac.config([:twitch, :client_id])
-  defp client_secret, do: Teac.config([:twitch, :client_secret])
-  defp redirect_uri, do: Teac.config([:twitch, :redirect_uri])
+  defp client_id(), do: Teac.config([:twitch, :client_id])
+  defp client_secret(), do: Teac.config([:twitch, :client_secret])
+  defp redirect_uri(), do: Teac.config([:twitch, :redirect_uri])
+  defp scopes(), do: Teac.TwitchAuthScopes.all_values()
 
-  def random_string do
+  defp random_string do
     :crypto.strong_rand_bytes(32)
     |> Base.url_encode64()
     |> String.replace(~r/[\+\/]/, "-")

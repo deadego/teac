@@ -2,17 +2,17 @@ defmodule Teac.TwitchWssClient do
   use WebSockex
   require Logger
 
-  @wss_endpoint "wss://eventsub.wss.twitch.tv/ws"
+  @wss_endpoint "wss://eventsub.wss.twitch.tv/ws?keepalive_timeout_seconds=30"
 
   def start_link(_) do
     # We need a client for authing and generating a jwt
-    # access_jwt = ""
+    access_jwt = "yrjifaba441nrq32zdyy2avyouaiwg"
 
     WebSockex.start_link(
       @wss_endpoint,
       __MODULE__,
       %{
-        # access_token: access_jwt
+        access_token: access_jwt
       }
     )
   end

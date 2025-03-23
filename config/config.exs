@@ -62,8 +62,9 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :teac, :twitch,
-  client_id: System.get_env("TWITCH_CLIENT_ID"),
-  redirect_url: System.get_env("TWITCH_REDIRECT_URL")
+  client_id: System.get_env("TWITCH_CLIENT_ID") || "",
+  client_secret: System.get_env("TWITCH_CLIENT_SECRET") || "",
+  redirect_uri: System.get_env("TWITCH_REDIRECT_URI") || ""
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

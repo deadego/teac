@@ -6,7 +6,6 @@ defmodule Teac.Repo.Migrations.CreateUserAuth do
       add :email, :string, null: false
       add :username, :string, null: false
       add :name, :string
-      add :role, :string, null: false
       add :confirmed_at, :naive_datetime
       add :active_profile_user_id, references(:users, on_delete: :nilify_all)
 
