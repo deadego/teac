@@ -1,5 +1,27 @@
 # (Teac) Twitch Elixir API Client
 
+NOTE: this is a work in progress.
+
+## Roadmap of API Endpoints:
+
+### Analytics
+- [ ] Analytics.Extensions.get()
+- [ ] Analytics.Game.get()
+
+### Bits
+- [ ] Bits.Leaderboard.get()
+- [ ] Bits.Cheermotes.get()
+- [ ] Bits.Extensions.get()
+- [ ] Bits.Extensions.put()
+
+### ChannelPoints
+- [ ] ChannelPoints.CustomRewards.get()
+- [ ] ChannelPoints.CustomRewards.post()
+- [ ] ChannelPoints.CustomRewards.patch()
+- [ ] ChannelPoints.CustomRewards.delete()
+- [ ] ChannelPoints.Redemptions.get()
+- [ ] ChannelPoints.Redemptions.patch()
+
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
