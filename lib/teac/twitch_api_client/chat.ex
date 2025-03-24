@@ -1,19 +1,96 @@
 defmodule Teac.TwitchApiClient.Chat do
   defmodule Announcements do
-    def post() do
-      # POST  https://api.twitch.tv/helix/chat/announcements
+    @doc """
+    Sends an announcement to the broadcaster’s chat room.
+
+    source docs: https://dev.twitch.tv/docs/api/reference/#send-chat-announcement
+    Rate Limits: One announcement may be sent every 2 seconds.
+
+    ## Authorization
+
+    Requires a user access token that includes the moderator:manage:announcements scope.
+    """
+    def post(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+      broadcaster_id = Keyword.fetch!(opts, :broadcaster_id)
+      moderator_id = Keyword.fetch!(opts, :moderator_id)
+      message = Keyword.fetch!(opts, :message)
+      color = Keyword.get(opts, :color, nil)
+
+      case Req.post!("https://api.twitch.tv/helix/chat/announcements",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [
+               broadcaster_id: broadcaster_id,
+               moderator_id: moderator_id,
+               message: message,
+               color: color
+             ],
+             decode_body: :json
+           )
+           |> dbg() do
+        %Req.Response{status: 204, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Badges do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/badges
+    @doc """
+      Gets the broadcaster’s list of custom chat badges. The list is empty if the broadcaster hasn’t created custom chat badges.
+      For information about custom badges, see subscriber badges and Bits badges.
+
+      source docs: https://dev.twitch.tv/docs/api/reference/#get-channel-chat-badges
+
+      ## Authorization
+      Requires an app access token or user access token.
+    """
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+      broadcaster_id = Keyword.fetch!(opts, :broadcaster_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/badges",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: [broadcaster_id: broadcaster_id]
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Badges.Global do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/badges/global
+    @doc """
+    Gets Twitch’s list of chat badges, which users may use in any channel’s chat room.
+    For information about chat badges, see Twitch Chat Badges Guide.
+
+    source docs: https://dev.twitch.tv/docs/api/reference/#get-global-chat-badges
+
+    ## Authorization
+
+    Requires an app access token or user access token.
+    """
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/badges/global",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ]
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
@@ -34,14 +111,40 @@ defmodule Teac.TwitchApiClient.Chat do
   end
 
   defmodule Emotes do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/emotes
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+      broadcaster_id = Keyword.fetch!(opts, :broadcaster_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/emotes",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: [broadcaster_id: broadcaster_id]
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Emotes.Global do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/emotes/global
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+      broadcaster_id = Keyword.fetch!(opts, :broadcaster_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/emotes/global",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: [broadcaster_id: broadcaster_id]
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
