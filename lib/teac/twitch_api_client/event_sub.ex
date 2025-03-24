@@ -1,43 +1,163 @@
 defmodule Teac.TwitchApiClient.EventSub do
   defmodule Conduits do
-    def get() do
-      # GET    https://api.twitch.tv/helix/eventsub/conduits
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/eventsub/conduits",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def post() do
-      # POST   https://api.twitch.tv/helix/eventsub/conduit
+    def post(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.post!("https://api.twitch.tv/helix/eventsub/conduit",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def patch() do
-      # PATCH  https://api.twitch.tv/helix/eventsub/conduits
+    def patch(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.patch!("https://api.twitch.tv/helix/eventsub/conduit",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def delete() do
-      # DELETE https://api.twitch.tv/helix/eventsub/conduits
+    def delete(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.delete!("https://api.twitch.tv/helix/eventsub/conduit",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Conduits.Shards do
-    def get() do
-      # GET    https://api.twitch.tv/helix/eventsub/conduits/shards
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/eventsub/conduits/shards",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def patch() do
-      # PATCH  https://api.twitch.tv/helix/eventsub/conduits/shards
+    def patch(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.patch!("https://api.twitch.tv/helix/eventsub/conduits/shards",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Subscriptions do
-    def get() do
-      # GET    https://api.twitch.tv/helix/eventsub/subscriptions
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/eventsub/subscriptions",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def post() do
-      # POST   https://api.twitch.tv/helix/eventsub/subscriptions
+    def post(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.post!("https://api.twitch.tv/helix/eventsub/subscriptions",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def delete() do
-      # DELETE https://api.twitch.tv/helix/eventsub/subscriptions
+    def delete(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.delete!("https://api.twitch.tv/helix/eventsub/subscriptions",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 end

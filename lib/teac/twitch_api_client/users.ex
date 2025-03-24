@@ -80,32 +80,110 @@ defmodule Teac.TwitchApiClient.Users do
   end
 
   defmodule Blocks do
-    def get() do
-      # GET https://api.twitch.tv/helix/users/blocks
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/users/blocks",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def put() do
-      # PUT https://api.twitch.tv/helix/users/blocks
+    def put(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.put!("https://api.twitch.tv/helix/users/blocks",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def delete() do
-      # DELETE https://api.twitch.tv/helix/users/blocks
+    def delete(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.delete!("https://api.twitch.tv/helix/users/blocks",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Extensions do
-    def get() do
-      # GET https://api.twitch.tv/helix/users/extensions
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/users/extensions",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def put() do
-      # PUT https://api.twitch.tv/helix/users/extensions
+    def put(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.put!("https://api.twitch.tv/helix/users/extensions",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Extensions.List do
-    def get() do
-      # GET https://api.twitch.tv/helix/users/extensions/list
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/users/extensions/list",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 end

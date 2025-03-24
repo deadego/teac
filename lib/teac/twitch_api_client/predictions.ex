@@ -1,13 +1,53 @@
 defmodule Teac.TwitchApiClient.Predictions do
-  def get() do
-    # GET   https://api.twitch.tv/helix/predictions
+  def get(opts) do
+    token = Keyword.fetch!(opts, :token)
+    client_id = Keyword.fetch!(opts, :client_id)
+
+    case Req.get!("https://api.twitch.tv/helix/predictions",
+           headers: [
+             {"Authorization", "Bearer #{token}"},
+             {"Client-Id", client_id}
+           ],
+           params: []
+         ) do
+      %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+      %Req.Response{body: body} -> {:error, body}
+    end
   end
 
-  def post() do
-    # POST  https://api.twitch.tv/helix/predictions
+  def post(opts) do
+    token = Keyword.fetch!(opts, :token)
+    client_id = Keyword.fetch!(opts, :client_id)
+
+    case Req.post!("https://api.twitch.tv/helix/predictions",
+           headers: [
+             {"Authorization", "Bearer #{token}"},
+             {"Client-Id", client_id},
+             {"Content-Type", "application/x-www-form-urlencoded"}
+           ],
+           form: [],
+           decode_body: :json
+         ) do
+      %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+      %Req.Response{body: body} -> {:error, body}
+    end
   end
 
-  def patch() do
-    # PATCH https://api.twitch.tv/helix/predictions
+  def patch(opts) do
+    token = Keyword.fetch!(opts, :token)
+    client_id = Keyword.fetch!(opts, :client_id)
+
+    case Req.patch!("https://api.twitch.tv/helix/predictions",
+           headers: [
+             {"Authorization", "Bearer #{token}"},
+             {"Client-Id", client_id},
+             {"Content-Type", "application/x-www-form-urlencoded"}
+           ],
+           form: [],
+           decode_body: :json
+         ) do
+      %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+      %Req.Response{body: body} -> {:error, body}
+    end
   end
 end

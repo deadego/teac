@@ -32,26 +32,44 @@ defmodule Teac.TwitchApiClient.Analytics do
     Because it can take up to two days for the data to be available, you must specify an end date that's earlier than today minus one to two days.
     If not, the API ignores your end date and uses an end date that is today minus one to two days.
     """
-    def get() do
-      Req.get!("https://api.twitch.tv/helix/analytics/extensions",
-        headers: [
-          {"Authorization", "Bearer SOME_TOKEN"},
-          {"Client-Id", "SOME_ID"}
-        ],
-        params: [login: "your_username_here"]
-      )
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/analytics/extensions",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Teac.TwitchApiClient.Analytics.Games do
-    def get() do
-      Req.get!("GET https://api.twitch.tv/helix/analytics/games",
-        headers: [
-          {"Authorization", "Bearer SOME_TOKEN"},
-          {"Client-Id", "SOME_ID"}
-        ],
-        params: [login: "your_username_here"]
-      )
+    @doc """
+    Gets an analytics report for one or more games. The response contains the URLs used to download the reports (CSV files). Learn more
+
+    ## Authorization
+    Requires a user access token that includes the analytics:read:games scope.
+    """
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/analytics/games",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 end

@@ -95,18 +95,56 @@ defmodule Teac.TwitchApiClient.Chat do
   end
 
   defmodule Chatters do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/chatters
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/chatters",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Color do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/color
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/color",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def put() do
-      # PUT   https://api.twitch.tv/helix/chat/color
+    def put(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.put!("https://api.twitch.tv/helix/chat/color",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
@@ -149,14 +187,38 @@ defmodule Teac.TwitchApiClient.Chat do
   end
 
   defmodule Emotes.Set do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/emotes/set
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/emotes/set",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Emotes.User do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/emotes/user
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/emotes/user",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
@@ -190,18 +252,58 @@ defmodule Teac.TwitchApiClient.Chat do
   end
 
   defmodule Settings do
-    def get() do
-      # GET   https://api.twitch.tv/helix/chat/settings
+    def get(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.get!("https://api.twitch.tv/helix/chat/settings",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id}
+             ],
+             params: []
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
 
-    def patch() do
-      # PATCH https://api.twitch.tv/helix/chat/settings
+    def patch(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.patch!("https://api.twitch.tv/helix/chat/settings",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 
   defmodule Shoutouts do
-    def post() do
-      # POST  https://api.twitch.tv/helix/chat/shoutouts
+    def post(opts) do
+      token = Keyword.fetch!(opts, :token)
+      client_id = Keyword.fetch!(opts, :client_id)
+
+      case Req.post!("https://api.twitch.tv/helix/chat/shoutouts",
+             headers: [
+               {"Authorization", "Bearer #{token}"},
+               {"Client-Id", client_id},
+               {"Content-Type", "application/x-www-form-urlencoded"}
+             ],
+             form: [],
+             decode_body: :json
+           ) do
+        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{body: body} -> {:error, body}
+      end
     end
   end
 end
