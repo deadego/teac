@@ -27,9 +27,7 @@ defmodule TeacWeb.TwitchLive do
             } <-
               @twitch_chat_msgs
           }>
-            <span class="font-bold" style={"color: #{color};"}>{chatter_user_name}</span>: {msg[
-              "text"
-            ]}
+            <span class="font-bold" style={"color: #{color};"}>{chatter_user_name}</span>: {raw(msg)}
           </p>
         </div>
       </div>
@@ -63,33 +61,29 @@ defmodule TeacWeb.TwitchLive do
 
   def handle_info(
         {:twitch_chat_msg, msg},
-        %{assigns: %{twitch_chat_msgs: twitch_chat_msgs, current_user: current_user}} = socket
+        %{assigns: %{twitch_chat_msgs: twitch_chat_msgs}} = socket
       ) do
-    case msg do
-      %{
-        "event" => %{
-          "message" => %{
-            "fragments" => [%{"emote" => %{"emote_set_id" => emote_set_id, "id" => emote_id}}]
-          }
-        }
-      } ->
-        %{provider_token: provider_token} = current_user.identities |> List.first()
+    %{
+      "event" => %{
+        "chatter_user_name" => chatter_user_name,
+        "color" => color
+      }
+    } = msg
 
-        {:ok, return} =
-          Teac.TwitchApiClient.Chat.Emotes.Set.get(
-            token: provider_token,
-            client_id: Teac.config([:twitch, :client_id]),
-            emote_set_id: emote_set_id
-          )
-
-        Enum.find(return, fn %{"id" => id} -> id == emote_id end)
-        |> dbg()
-
-      _ ->
-        nil
-    end
-
-    {:noreply, assign(socket, twitch_chat_msgs: twitch_chat_msgs ++ [msg])}
+    {:noreply,
+     assign(socket,
+       twitch_chat_msgs:
+         twitch_chat_msgs ++
+           [
+             %{
+               "event" => %{
+                 "chatter_user_name" => chatter_user_name,
+                 "color" => color,
+                 "message" => process_fragments(msg)
+               }
+             }
+           ]
+     )}
   end
 
   def start_twitch_socket(access_token, liveview_pid) do
@@ -97,5 +91,27 @@ defmodule TeacWeb.TwitchLive do
       Teac.TwitchWssClientSupervisor,
       {Teac.TwitchWssClient, %{access_token: access_token, liveview_pid: liveview_pid}}
     )
+  end
+
+  defp process_fragments(msg) do
+    msg["event"]["message"]["fragments"]
+    |> Enum.map(fn
+      %{"type" => "emote", "emote" => emote} ->
+        %{"id" => id, "format" => format} = emote
+
+        format = if Enum.member?(format, "animated"), do: "default", else: "static"
+
+        """
+        <img class="inline" src="https://static-cdn.jtvnw.net/emoticons/v2/#{id}/#{format}/dark/1.0"/>
+        """
+
+      %{"type" => "text", "text" => text} ->
+        text
+
+      frag ->
+        frag
+    end)
+    |> List.to_string()
+    |> dbg()
   end
 end
