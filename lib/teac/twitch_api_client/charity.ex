@@ -1,5 +1,5 @@
 defmodule Teac.TwitchApiClient.Charity do
-  defmodule Teac.TwitchApiClient.Charity.Campaigns do
+  defmodule Campaigns do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -17,7 +17,7 @@ defmodule Teac.TwitchApiClient.Charity do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Charity.Donations do
+  defmodule Donations do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)

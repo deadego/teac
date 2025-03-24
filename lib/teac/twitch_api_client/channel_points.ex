@@ -1,5 +1,5 @@
 defmodule Teac.TwitchApiClient.ChannelPoints do
-  defmodule Teac.TwitchApiClient.ChannelPoints.CustomRewards do
+  defmodule CustomRewards do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -71,7 +71,7 @@ defmodule Teac.TwitchApiClient.ChannelPoints do
     end
   end
 
-  defmodule Teac.TwitchApiClient.ChannelPoints.Redemptions do
+  defmodule Redemptions do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)

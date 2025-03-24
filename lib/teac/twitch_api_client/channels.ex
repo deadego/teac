@@ -33,7 +33,7 @@ defmodule Teac.TwitchApiClient.Channels do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Channels.Ads do
+  defmodule Channels.Ads do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -50,7 +50,7 @@ defmodule Teac.TwitchApiClient.Channels do
       end
     end
 
-    defmodule Teac.TwitchApiClient.Channels.Ads.Schedule.Snooze do
+    defmodule Ads.Schedule.Snooze do
       def post(opts) do
         token = Keyword.fetch!(opts, :token)
         client_id = Keyword.fetch!(opts, :client_id)
@@ -71,7 +71,7 @@ defmodule Teac.TwitchApiClient.Channels do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Channels.Commercial do
+  defmodule Commercial do
     def post(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -91,7 +91,7 @@ defmodule Teac.TwitchApiClient.Channels do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Channels.Editors do
+  defmodule Editors do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -109,7 +109,7 @@ defmodule Teac.TwitchApiClient.Channels do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Channels.Followed do
+  defmodule Followed do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -127,7 +127,7 @@ defmodule Teac.TwitchApiClient.Channels do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Channels.Followers do
+  defmodule Followers do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -145,7 +145,7 @@ defmodule Teac.TwitchApiClient.Channels do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Channels.Vips do
+  defmodule Vips do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)

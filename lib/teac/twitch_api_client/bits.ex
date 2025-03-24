@@ -1,5 +1,5 @@
 defmodule Teac.TwitchApiClient.Bits do
-  defmodule Teac.TwitchApiClient.Bits.Leaderboard do
+  defmodule Leaderboard do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -17,7 +17,7 @@ defmodule Teac.TwitchApiClient.Bits do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Bits.Cheermotes do
+  defmodule Cheermotes do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
@@ -35,7 +35,7 @@ defmodule Teac.TwitchApiClient.Bits do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Bits.Extensions do
+  defmodule Extensions do
     def get(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)

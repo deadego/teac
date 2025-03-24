@@ -1,5 +1,5 @@
 defmodule Teac.TwitchApiClient.Analytics do
-  defmodule Teac.TwitchApiClient.Analytics.Extensions do
+  defmodule Extensions do
     @doc """
     # Get Extension Analytics
     Gets an analytics report for one or more extensions. The response contains the URLs used to download the reports (CSV files).
@@ -49,7 +49,7 @@ defmodule Teac.TwitchApiClient.Analytics do
     end
   end
 
-  defmodule Teac.TwitchApiClient.Analytics.Games do
+  defmodule Games do
     @doc """
     Gets an analytics report for one or more games. The response contains the URLs used to download the reports (CSV files). Learn more
 
