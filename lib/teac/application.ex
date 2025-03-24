@@ -14,7 +14,7 @@ defmodule Teac.Application do
       {Phoenix.PubSub, name: Teac.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Teac.Finch},
-      # Teac.TwitchWssClient,
+      {DynamicSupervisor, name: Teac.TwitchWssClientSupervisor, strategy: :one_for_one},
       # Start a worker by calling: Teac.Worker.start_link(arg)
       # {Teac.Worker, arg},
       # Start to serve requests, typically the last entry

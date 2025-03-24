@@ -127,17 +127,17 @@ defmodule Teac.TwitchApiClient.EventSub do
     def post(opts) do
       token = Keyword.fetch!(opts, :token)
       client_id = Keyword.fetch!(opts, :client_id)
+      payload = Keyword.fetch!(opts, :payload)
 
       case Req.post!("https://api.twitch.tv/helix/eventsub/subscriptions",
              headers: [
                {"Authorization", "Bearer #{token}"},
-               {"Client-Id", client_id},
-               {"Content-Type", "application/x-www-form-urlencoded"}
+               {"Client-Id", client_id}
              ],
-             form: [],
+             json: payload,
              decode_body: :json
            ) do
-        %Req.Response{status: 200, body: %{"data" => data}} -> {:ok, data}
+        %Req.Response{status: 202, body: %{"data" => data}} -> {:ok, data}
         %Req.Response{body: body} -> {:error, body}
       end
     end

@@ -12,7 +12,6 @@ defmodule Teac.Accounts.User do
     field :confirmed_at, :naive_datetime
     field :active_profile_user_id, :id
     field :avatar_url, :string
-    field :external_homepage_url, :string
 
     has_many :identities, Identity
 
@@ -23,7 +22,7 @@ defmodule Teac.Accounts.User do
   A user changeset for twitch registration.
   """
   def twitch_registration_changeset(info, primary_email, emails, token) do
-    %{"login" => username, "avatar_url" => avatar_url, "html_url" => external_homepage_url} = info
+    %{"login" => username, "avatar_url" => avatar_url} = info
 
     identity_changeset =
       Identity.twitch_registration_changeset(info, primary_email, emails, token)
@@ -33,12 +32,11 @@ defmodule Teac.Accounts.User do
         "username" => username,
         "email" => primary_email,
         "name" => get_change(identity_changeset, :provider_name),
-        "avatar_url" => avatar_url,
-        "external_homepage_url" => external_homepage_url
+        "avatar_url" => avatar_url
       }
 
       %User{}
-      |> cast(params, [:email, :name, :username, :avatar_url, :external_homepage_url])
+      |> cast(params, [:email, :name, :username, :avatar_url])
       |> validate_required([:email, :name, :username])
       |> validate_username()
       |> validate_email()

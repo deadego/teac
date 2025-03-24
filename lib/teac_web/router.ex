@@ -35,8 +35,8 @@ defmodule TeacWeb.Router do
 
     live_session :authenticated,
       on_mount: [{TeacWeb.UserAuth, :ensure_authenticated}] do
-      live "/:profile_username", ProfileLive, :show
       live "/profile/settings", SettingsLive, :edit
+      live "/twitch", TwitchLive, :home
     end
   end
 

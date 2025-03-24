@@ -90,7 +90,7 @@ defmodule Teac.Accounts do
   end
 
   def get_user(id) do
-    Repo.one(from(u in User, where: u.id == ^id, limit: 1))
+    Repo.one(from(u in User, where: u.id == ^id, limit: 1, preload: [:identities]))
   end
 
   def get_user_by!(fields), do: Repo.get_by!(User, fields)

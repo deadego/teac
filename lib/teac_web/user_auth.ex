@@ -147,7 +147,7 @@ defmodule TeacWeb.UserAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  def signed_in_path(conn) do
-    TeacWeb.CoreComponents.profile_path(conn.assigns.current_user)
+  def signed_in_path(_conn) do
+    ~p"/twitch"
   end
 end

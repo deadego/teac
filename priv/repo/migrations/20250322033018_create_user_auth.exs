@@ -8,7 +8,7 @@ defmodule Teac.Repo.Migrations.CreateUserAuth do
       add :name, :string
       add :confirmed_at, :naive_datetime
       add :active_profile_user_id, references(:users, on_delete: :nilify_all)
-
+      add :avatar_url, :string
       timestamps()
     end
 

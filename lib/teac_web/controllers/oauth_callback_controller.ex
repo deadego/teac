@@ -8,35 +8,53 @@ defmodule TeacWeb.OAuthCallbackController do
     client = twitch_client(conn)
 
     # Get token
-    client.exchange_code_for_token(code: code, state: state)
-    |> dbg()
+    {:ok,
+     %{
+       "access_token" => access_token,
+       "expires_in" => access_token_expires_in,
+       "refresh_token" => refresh_token
+     }} = client.exchange_code_for_token(code: code, state: state)
 
-    # Get user inform
+    {:ok,
+     [
+       %{
+         "broadcaster_type" => broadcaster_type,
+         "created_at" => created_at,
+         "description" => description,
+         "display_name" => display_name,
+         "email" => email,
+         "id" => twitch_id,
+         "login" => twitch_login,
+         "offline_image_url" => offline_image_url,
+         "profile_image_url" => profile_image_url,
+         "type" => twitch_type
+       }
+     ]} =
+      Teac.TwitchApiClient.Users.get(
+        client_id: Teac.config([:twitch, :client_id]),
+        token: access_token
+      )
 
-    # with {:ok, info} <- client.exchange_access_token(code: code, state: state),
-    #      %{info: info, primary_email: primary, emails: emails, token: token} = info,
-    #      {:ok, user} <- Accounts.register_twitch_user(primary, info, emails, token) do
-    #   conn
-    #   |> put_flash(:info, "Welcome #{user.email}")
-    #   |> TeacWeb.UserAuth.log_in_user(user)
-    # else
-    #   {:error, %Ecto.Changeset{} = changeset} ->
-    #     Logger.info("failed Twitch insert #{inspect(changeset.errors)}")
+    info = %{
+      "broadcaster_type" => broadcaster_type,
+      "created_at" => created_at,
+      "description" => description,
+      "display_name" => display_name,
+      "email" => email,
+      "id" => twitch_id,
+      "login" => twitch_login,
+      "offline_image_url" => offline_image_url,
+      "profile_image_url" => profile_image_url,
+      "type" => twitch_type,
+      "access_token_expires_in" => access_token_expires_in,
+      "refresh_token" => refresh_token
+    }
 
-    #     conn
-    #     |> put_flash(
-    #       :error,
-    #       "We were unable to fetch the necessary information from your GithHub account"
-    #     )
-    #     |> redirect(to: "/")
+    {:ok, user} = Teac.Accounts.register_twitch_user(email, info, [email], access_token)
 
-    #   {:error, reason} ->
-    #     Logger.info("failed Twitch exchange #{inspect(reason)}")
-
-    #     conn
-    #     |> put_flash(:error, "We were unable to contact Twitch. Please try again later")
-    #     |> redirect(to: "/")
-    # end
+    conn
+    |> put_flash(:info, "Welcome #{user.email}")
+    |> TeacWeb.UserAuth.log_in_user(user)
   end
 
   def new(conn, %{"provider" => "twitch", "error" => "access_denied"}) do
