@@ -1,6 +1,12 @@
-# (Teac) Twitch Elixir API Client
+# Teac (Twitch Elixir API Client)
 
-NOTE: this is a work in progress.
+## NOTE:
+* this is a work in progress.
+* this is currently inside a temp project until we have a better inital release.
+
+Teac is an elixir client for the Twitch API.
+
+The goal of this project is to use REST api and Alos the Websocket Endpoint
 
 ## Roadmap of API Endpoints:
 
@@ -9,10 +15,10 @@ NOTE: this is a work in progress.
 - [ ] Game.get()
 
 ### Bits
-- [ ] Leaderboard.get()
 - [ ] Cheermotes.get()
 - [ ] Extensions.get()
 - [ ] Extensions.put()
+- [ ] Leaderboard.get()
 
 ### ChannelPoints
 - [ ] CustomRewards.get()
@@ -29,9 +35,9 @@ NOTE: this is a work in progress.
 - [ ] Ads.Schedule.Snooze.post()
 - [ ] Commercial.post()
 - [ ] Editors.get()
-- [ ] Followed.get() do
+- [ ] Followed.get()
 - [ ] Followers.get()
-- [ ] Vips.get() do
+- [ ] Vips.get()
 - [ ] Vips.delete()
 
 ### Charity
@@ -76,6 +82,126 @@ NOTE: this is a work in progress.
 - [ ] Subscriptions.post()
 - [ ] Subscriptions.delete()
 
+### Extensions do
+- [ ] get()
+- [ ] Chat.post()
+- [ ] Configurations.get()
+- [ ] Configurations.put()
+- [ ] Live.get()
+- [ ] Jwt.Secrets.get()
+- [ ] PubSub.post()
+- [ ] Released.get()
+- [ ] RequiredConfiguration.put()
+- [ ] Transactions.get()
+
+### Games do
+- [ ] get()
+- [ ] Top.get()
+
+### Goals
+- [ ] get()
+
+### GuestStar
+- [ ] ChannelCettings.get()
+- [ ] ChannelCettings.put()
+- [ ] Invites.get()
+- [ ] Invites.post()
+- [ ] Invites.delete()
+- [ ] Session.get()
+- [ ] Session.post()
+- [ ] Session.delete()
+- [ ] Slot.get()
+- [ ] Slot.post()
+- [ ] Slot.delete()
+- [ ] SlotSettings.patch()
+
+### Hypetrain
+- [ ] get()
+
+### Moderation
+- [ ] Automod.Settings.get()
+- [ ] Automod.Settings.put()
+- [ ] Bans.post()
+- [ ] Bands.delete()
+- [ ] Banned.get()
+- [ ] BlockedTerms.get()
+- [ ] BlockedTerms.post()
+- [ ] BlockedTerms.delete()
+- [ ] Channels.get()
+- [ ] Chat.delete()
+- [ ] Snforcements.Status.post()
+- [ ] Moderators.get()
+- [ ] Moderators.post()
+- [ ] Moderators.delete()
+- [ ] ShieldMode.get()
+- [ ] ShieldMode.put()
+- [ ] Warnings.post()
+- [ ] UnbanRequests.get()
+- [ ] UnbanRequests.patch()
+
+### Polls
+- [ ] get()
+- [ ] post()
+- [ ] patch()
+
+### Predictions
+- [ ] get()
+- [ ] post()
+- [ ] patch()
+
+### Raids
+- [ ] post()
+- [ ] delete()
+
+### Schedule
+- [ ] get()
+- [ ] delete()
+- [ ] ICalendar.get()
+- [ ] Segment.post()
+- [ ] Segment.patch()
+- [ ] Settings.patch()
+
+### Search
+- [ ] Categories.get()
+- [ ] Channels.get()
+
+### SharedChat
+- [ ] get()
+
+### Streams
+- [ ] get()
+- [ ] Followed.get()
+- [ ] Markers.get()
+- [ ] Markers.post()
+- [ ] Tags.get()
+
+### Subscriptions
+- [ ] get()
+- [ ] User.get()
+
+### Tags
+- [ ] get()
+
+### Teams
+- [ ] get()
+- [ ] Channel.get()
+
+### Users
+- [x] get()
+- [x] put()
+- [ ] Blocks.get()
+- [ ] Blocks.put()
+- [ ] Blocks.delete()
+- [ ] Extensions.get()
+- [ ] Extensions.put()
+- [ ] Extensions.List.get()
+
+### Videos
+- [ ] get()
+- [ ] delete()
+
+### Whipsers
+- [ ] get()
 
 To start your Phoenix server:
 
