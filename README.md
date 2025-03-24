@@ -5,22 +5,54 @@ NOTE: this is a work in progress.
 ## Roadmap of API Endpoints:
 
 ### Analytics
-- [ ] Analytics.Extensions.get()
-- [ ] Analytics.Game.get()
+- [ ] Extensions.get()
+- [ ] Game.get()
 
 ### Bits
-- [ ] Bits.Leaderboard.get()
-- [ ] Bits.Cheermotes.get()
-- [ ] Bits.Extensions.get()
-- [ ] Bits.Extensions.put()
+- [ ] Leaderboard.get()
+- [ ] Cheermotes.get()
+- [ ] Extensions.get()
+- [ ] Extensions.put()
 
 ### ChannelPoints
-- [ ] ChannelPoints.CustomRewards.get()
-- [ ] ChannelPoints.CustomRewards.post()
-- [ ] ChannelPoints.CustomRewards.patch()
-- [ ] ChannelPoints.CustomRewards.delete()
-- [ ] ChannelPoints.Redemptions.get()
-- [ ] ChannelPoints.Redemptions.patch()
+- [ ] CustomRewards.get()
+- [ ] CustomRewards.post()
+- [ ] CustomRewards.patch()
+- [ ] CustomRewards.delete()
+- [ ] Redemptions.get()
+- [ ] Redemptions.patch()
+
+### Channels
+- [ ] get()
+- [ ] patch()
+- [ ] Ads.get()
+- [ ] Ads.Schedule.Snooze.post()
+- [ ] Commercial.post()
+- [ ] Editors.get()
+- [ ] Followed.get() do
+- [ ] Followers.get()
+- [ ] Vips.get() do
+- [ ] Vips.delete()
+
+### Charity do
+- [ ] Campaigns.get()
+- [ ] Donations.get()
+
+### Chat
+- [x] Announcements.post()
+- [x] Badges.get()
+- [x] Badges.Global.get()
+- [ ] Chatters.get()
+- [ ] Color.get()
+- [ ] Color.put()
+- [x] Emotes.get()
+- [x] Emotes.Global.get()
+- [ ] Emotes.Set.get()
+- [ ] Emotes.User.get()
+- [x] Messages.post()
+- [ ] Settings.get()
+- [ ] Settings.patch()
+- [ ] Shoutouts.post()
 
 To start your Phoenix server:
 
