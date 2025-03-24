@@ -34,7 +34,7 @@ NOTE: this is a work in progress.
 - [ ] Vips.get() do
 - [ ] Vips.delete()
 
-### Charity do
+### Charity
 - [ ] Campaigns.get()
 - [ ] Donations.get()
 
@@ -53,6 +53,29 @@ NOTE: this is a work in progress.
 - [ ] Settings.get()
 - [ ] Settings.patch()
 - [ ] Shoutouts.post()
+
+### Clips
+- [ ] get()
+- [ ] post()
+
+### ContentClassificationLabels
+- [ ] get()
+
+### Entitlements
+- [ ] Drops.get()
+- [ ] Drops.patch()
+
+### EventSub
+- [ ] Conduits.get()
+- [ ] Conduits.post()
+- [ ] Conduits.patch()
+- [ ] Conduits.delete()
+- [ ] Conduits.Shards.get()
+- [ ] Conduits.Shards.patch()
+- [ ] Subscriptions.get()
+- [ ] Subscriptions.post()
+- [ ] Subscriptions.delete()
+
 
 To start your Phoenix server:
 
