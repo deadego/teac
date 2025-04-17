@@ -6,13 +6,6 @@ defmodule Teac.Auth do
     grant_type = "authorization_code"
     redirect_uri = "https://localhost:4000/oauth/callback/twitch"
 
-    dbg(auth_uri() <> "token")
-    # code=l4twaxkxh9jtrwo7dtk0vnpyc991ci
-    # client_secret=2gw819tyof8qhcv1rgls7l1p5hht3z&
-    # client_id=pxe2i27868ufsa6zwo7cq42d3slnum&
-    # redirect_uri=https://localhost:4000/oauth/callback/twitch&
-    # grant_type=authorization_code
-
     case Req.post!(auth_uri() <> "token",
            headers: [
              {"Client-Id", client_id},
