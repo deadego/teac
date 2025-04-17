@@ -1,6 +1,6 @@
 # Teac
 
-Twitch Elxiir API Client
+Twitch Elixir API Client
 An elixir client for Twitch's REST and WebSocket API.
 
 ## Installation
